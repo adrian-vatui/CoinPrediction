@@ -15,6 +15,14 @@ warnings.filterwarnings("ignore")
 df = None
 
 
+def page_style():
+    new_style = """ <style> 
+    .stDateInput { padding-top: 4em} 
+    .rsiDiv { padding-left: 4em}
+    </style>  """
+    st.markdown(new_style, unsafe_allow_html=True)
+
+
 def dropdown(text, options):
     option = st.selectbox(text, options)
     return option
@@ -129,9 +137,12 @@ def main():
         for price in prices:
             calculate_prediction_rsi(df, price)
 
-        st.markdown(f'<center>{evaluate_rsi(get_last_rsi(df))}</center>', unsafe_allow_html=True)
+        st.markdown(f'<div class = "rsiDiv"><center>{evaluate_rsi(get_last_rsi(df))}</center></div>',
+                    unsafe_allow_html=True)
         draw_price_graph(prices)
         draw_sentiment_graph(graph_type)
+
+    page_style()
 
 
 if __name__ == '__main__':
