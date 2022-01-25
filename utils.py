@@ -8,7 +8,8 @@ import requests
 
 from models import LSTM
 
-FAST_PERIOD = 14
+PERIOD = 14
+FAST_PERIOD = 12
 SLOW_PERIOD = 26
 
 
@@ -28,11 +29,11 @@ def preprocess(csv_path):
 
 
 def calculate_rsi(dataframe):
-    dataframe.ta.rsi(close='close', length=FAST_PERIOD, append=True)
+    dataframe.ta.rsi(close='close', length=PERIOD, append=True)
 
 
 def calculate_MA(dataframe):
-    dataframe['MA'] = dataframe['close'].rolling(window=FAST_PERIOD).mean()
+    dataframe['MA'] = dataframe['close'].rolling(window=PERIOD).mean()
 
 
 def calculate_MACD(dataframe):
@@ -46,7 +47,7 @@ def calculate_prediction_rsi(dataframe, close):
 
 
 def get_last_rsi(dataframe):
-    return dataframe[f'RSI_{FAST_PERIOD}'].iloc[-1]
+    return dataframe[f'RSI_{PERIOD}'].iloc[-1]
 
 
 def evaluate_rsi(rsi):
